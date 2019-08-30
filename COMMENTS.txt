@@ -1,0 +1,30 @@
+I used Python 3.6 to solve the SLCSP problem
+I coded the solution in IDLE so it should work on any platform with Python 3 installed
+Addtionally I only imported the bisect module from the standard library so there are no additional dependencies
+
+
+I would be happy to explain the logic behind my code in further detail if you would like. A quick summary is
+I store each line of the csv files in dictionaries as I read thorugh the files line by line. 
+The keys of the zip_dict are the zip codes and the values are sets of tuples containing the state & rate area from the zips.csv.
+*** ie {'12345': {(NY, 1), (NY, 2), etc}
+The keys of the plans_dict are the rate area tupels and the values are sorted lists of the prices from the plans.csv.
+*** ie {(NY, 1): [100.20, 101.20, etc]
+**The plans_dict only contains the rate areas and prices for "Silver Plans" the other plan metals are ignored.
+
+
+I mainly used dictionaries to avoid the overhead of dynamically resizing lists. Also when I did use lists,
+I used bisect.insort() to maintain the the sorted order of the list and avoid expensive sorting algorithms in case 
+the list were to grow to a large size. 
+My thought process for writing the code was to keep it readable and flexible while avoiding inefficient use
+of computing resources.
+
+
+A way to optimize this code for memory efficiency would be to read the slcsp.csv file first, collect & store the data relevant to 
+the slcsp zip codes, and write to the solution file right away. The advantage of this approach is you are using as little memory 
+as possible. The drawback to this approach is it makes the code longer (more logic), harder to read, and less flexible. 
+I chose my approach to solving this problem over the potentially more efficient because of the flexibility and readability benefits.
+
+
+The outputs of the code are to the console and also to a slcsp_solution.csv file.
+As instructed, if a zip code has more than 1 rate area or not less than 2 silver plan premiums 
+I left the rate field blank in the slcsp output
